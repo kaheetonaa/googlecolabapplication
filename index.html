@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<head><meta property="og:image" content="https://raw.githubusercontent.com/kaheetonaa/covid19vn/master/fbthumbnail.jpg" />
+<meta property="twitter:image" content="https://raw.githubusercontent.com/kaheetonaa/covid19vn/master/fbthumbnail.jpg" />
+</head>
+<body>
+<div class="wrapper">
+      <div id="title"></div>
+      <div id="heading01"></div>
+	<div id="content01"></div>
+      </div>
+    </div>
+
+    <script type="module">
+      import {Runtime} from "https://unpkg.com/@observablehq/runtime@4/dist/runtime.js";
+      import notebook from "https://api.observablehq.com/@kuquanghuylcb/bang-tong-hop-cac-lenh-google-colab-cua-kaheetonaa.js?v=3";
+      const renders = {
+        "title":"#title",
+        "heading01":"#heading01",
+        "content01":"#content01",
+      };
+      function render(_node, value) {
+        if (!(value instanceof Element)) {
+          const el = document.createElement("span");
+          el.innerHTML = value;
+          value = el;
+        }
+        if (_node.firstChild !== value) {
+          if (_node.firstChild) {
+            while (_node.lastChild !== _node.firstChild) _node.removeChild(_node.lastChild);
+            _node.replaceChild(value, _node.firstChild);
+          } else {
+            _node.appendChild(value);
+          }
+        }
+      }
+      const runtime = new Runtime();
+      const main = runtime.module(notebook, name => {
+        const selector = renders[name];
+        if (selector) {
+          return {fulfilled: (value) => render(document.querySelector(selector), value)}
+        } else {
+          return true;
+        }
+      });
+    </script>
+  </body>
+</html>
